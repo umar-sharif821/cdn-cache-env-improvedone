@@ -1,0 +1,68 @@
+name: cdn-cache-optimizer
+version: "1.0.0"
+description: >
+  Edge CDN Cache Optimizer — an RL environment where an agent manages
+  a content delivery network cache. The agent decides which files to evict
+  when the cache is full, balancing hit rate, bandwidth efficiency, and
+  avoiding cache thrashing. Simulates real-world viral traffic spikes
+  alongside steady baseline demand.
+
+author: umar
+tags:
+  - openenv
+  - cdn
+  - cache
+  - infrastructure
+  - real-world
+
+tasks:
+  - id: task_easy
+    name: Steady Traffic Cache
+    difficulty: easy
+    episode_length: 100
+    cache_capacity_mb: 100.0
+
+  - id: task_medium
+    name: Mixed Traffic Cache
+    difficulty: medium
+    episode_length: 150
+    cache_capacity_mb: 80.0
+
+  - id: task_hard
+    name: Constrained Cache with Viral Bursts
+    difficulty: hard
+    episode_length: 200
+    cache_capacity_mb: 50.0
+
+observation_space:
+  type: structured
+  fields:
+    - step: int
+    - cache_used_mb: float
+    - cache_capacity_mb: float
+    - cache_fill_ratio: float
+    - cached_files: list[FileEntry]
+    - incoming_file_id: str
+    - incoming_file_size_mb: float
+    - incoming_file_is_viral: bool
+    - cache_hit: bool
+    - recent_hit_rate: float
+    - time_of_day: float
+    - queue_preview: list[str]
+
+action_space:
+  type: structured
+  fields:
+    - evict_file_id: str | null
+
+reward_range: [-1.0, 1.5]
+
+endpoints:
+  reset: POST /reset
+  step:  POST /step
+  state: GET  /state
+
+runtime:
+  framework: fastapi
+  python: "3.11"
+  port: 7860

@@ -1,0 +1,47 @@
+# Python bytecode / caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtualenvs
+.venv/
+venv/
+env/bin/
+env/Scripts/
+*.egg-info/
+
+# ML / training artifacts (too large for GitHub)
+model_output/
+training/model_output/
+cdn_trained_model/
+cdn_cache_optimizer_out/
+*.pt
+*.pth
+*.safetensors
+*.onnx
+*.bin
+events.out.tfevents.*
+runs/
+
+# Build / packaging
+build/
+dist/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Secrets
+.env
+.env.*
+*.key
+*.pem
+
+# Colab / notebooks
+.ipynb_checkpoints/
+
+# Logs
+*.log
