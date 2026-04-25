@@ -154,4 +154,7 @@ with gr.Blocks(title="CDN Cache Optimizer") as demo:
 
 
 if __name__ == "__main__":
-    demo.launch(server_name="0.0.0.0", server_port=7860)
+    import os
+    host = os.environ.get("GRADIO_SERVER_NAME", "127.0.0.1")
+    port = int(os.environ.get("GRADIO_SERVER_PORT", "7860"))
+    demo.launch(server_name=host, server_port=port)
