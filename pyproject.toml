@@ -8,7 +8,7 @@ version = "1.0.0"
 description = "Edge CDN Cache Optimizer - OpenEnv RL Environment"
 requires-python = ">=3.11"
 dependencies = [
-    "fastapi==0.111.0",
+    "fastapi>=0.115.2,<1.0",
     "uvicorn==0.29.0",
     "pydantic==2.7.1",
     "openai>=2.7.2",
