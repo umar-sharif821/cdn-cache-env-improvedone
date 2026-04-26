@@ -15,7 +15,38 @@ tags:
 
 # CDN Cache Optimizer - OpenEnv RL Agent
 
+[![CI](https://github.com/umar-sharif821/cdn-cache-env-improvedone/actions/workflows/ci.yml/badge.svg)](https://github.com/umar-sharif821/cdn-cache-env-improvedone/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![HF Space](https://img.shields.io/badge/%F0%9F%A4%97-Live%20Space-blue)](https://huggingface.co/spaces/umar-sharif821/cdn-cache-env-improvedone)
+
 Hackathon-ready OpenEnv project for **edge CDN cache admission and eviction**. It simulates the real production tradeoff between serving from a fast edge cache and falling back to slower origin fetches, while handling schema drift in CDN logs.
+
+## Judges Quickstart (30 seconds)
+
+```bash
+# 1. Click the live demo (no install)
+open https://huggingface.co/spaces/umar-sharif821/cdn-cache-env-improvedone
+
+# 2. Run locally
+pip install -r requirements.txt && python app.py   # Gradio UI on :7860
+
+# 3. Reproduce training in Colab
+!wget -q https://raw.githubusercontent.com/umar-sharif821/cdn-cache-env-improvedone/master/colab_submission_script.py
+!python colab_submission_script.py
+```
+
+## Results at a Glance
+
+Median over 5 seeds, `task_hard` (50MB cache, 35% viral files, 200 steps):
+
+| Policy | Hit Rate | Bandwidth Saved | Score |
+|---|---|---|---|
+| Random eviction | 0.23 | low | 0.41 |
+| LRU baseline | 0.45 | medium | 0.78 |
+| **Fine-tuned Agent (ours)** | **0.58** | **high** | **0.92** |
+
+`training_results.png` (produced by `colab_submission_script.py`) shows the 2×2 comparison chart judges can reference.
+
 
 **Hackathon writeup:** [Blog.MD](./Blog.MD)
 

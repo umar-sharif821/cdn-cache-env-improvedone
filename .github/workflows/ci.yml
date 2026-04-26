@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  smoke:
+    name: Syntax + Import Smoke Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install runtime dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Python syntax check (all tracked .py files)
+        run: |
+          python -m compileall -q env api server app.py colab_submission_script.py
+
+      - name: Import environment modules
+        run: |
+          python -c "from env.cache import CDNCacheEnv, TASK_CONFIGS; print('env.cache OK, tasks:', list(TASK_CONFIGS.keys()))"
+          python -c "from env.models import Action, Observation, FileEntry, Reward, StepResult, TaskConfig; print('env.models OK')"
+
+      - name: One-episode baseline smoke run
+        run: |
+          python - <<'PY'
+          from env.cache import CDNCacheEnv
+          from env.models import Action
+          env = CDNCacheEnv(task_id="task_easy", seed=0)
+          env.reset()
+          total = 0.0
+          for _ in range(20):
+              result = env.step(Action(evict_file_id=None))
+              total += result.reward.total
+              if result.done:
+                  break
+          print(f"Smoke OK - 20 steps, reward sum={total:.3f}")
+          PY
