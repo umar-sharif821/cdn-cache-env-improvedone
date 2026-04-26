@@ -17,6 +17,12 @@ tags:
 
 Hackathon-ready OpenEnv project for **edge CDN cache admission and eviction**. It simulates the real production tradeoff between serving from a fast edge cache and falling back to slower origin fetches, while handling schema drift in CDN logs.
 
+**Hackathon writeup:** [Blog.MD](./Blog.MD)
+
+**Live Space:** https://huggingface.co/spaces/umar-sharif821/cdn-cache-env-improvedone
+
+**GitHub:** https://github.com/umar-sharif821/cdn-cache-env-improvedone
+
 ---
 
 ## Why It Matters
