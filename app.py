@@ -9,6 +9,7 @@ import gradio as gr
 import matplotlib.pyplot as plt
 import numpy as np
 
+from agents.policies import lru_baseline, smart_agent
 from env.cache import CDNCacheEnv, TASK_CONFIGS
 from env.models import Action, Observation
 
@@ -20,35 +21,6 @@ class EpisodeMetrics:
     final_hit_rate: float
     total_reward: float
     bandwidth_saved_mb: float
-
-
-def lru_baseline(obs: Observation) -> Action:
-    if obs.cache_hit or not obs.cached_files:
-        return Action(evict_file_id=None)
-    victim = min(obs.cached_files, key=lambda f: f.last_accessed)
-    return Action(evict_file_id=victim.file_id)
-
-
-def smart_agent(obs: Observation) -> Action:
-    if obs.cache_hit or not obs.cached_files:
-        return Action(evict_file_id=None)
-    if obs.cache_fill_ratio < 0.92:
-        return Action(evict_file_id=None)
-
-    preview = set(obs.queue_preview)
-
-    def score(file_entry) -> Tuple[int, float, int, float]:
-        preview_keep = 1 if file_entry.file_id in preview else 0
-        viral_keep = 1 if file_entry.is_viral else 0
-        return (
-            preview_keep,
-            viral_keep,
-            file_entry.request_frequency,
-            -file_entry.size_mb,
-        )
-
-    victim = min(obs.cached_files, key=score)
-    return Action(evict_file_id=victim.file_id)
 
 
 def run_episode(task_id: str, seed: int, policy: Callable[[Observation], Action]) -> EpisodeMetrics:

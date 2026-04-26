@@ -28,6 +28,9 @@ runs/
 build/
 dist/
 
+# Evaluator outputs (regenerable via `python scripts/eval.py`)
+eval_results.json
+
 # OS / editor
 .DS_Store
 Thumbs.db

@@ -48,3 +48,6 @@ jobs:
                   break
           print(f"Smoke OK - 20 steps, reward sum={total:.3f}")
           PY
+
+      - name: Reproducible evaluator (quick)
+        run: python scripts/eval.py --quick
