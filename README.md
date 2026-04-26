@@ -23,6 +23,29 @@ Hackathon-ready OpenEnv project for **edge CDN cache admission and eviction**. I
 
 **GitHub:** https://github.com/umar-sharif821/cdn-cache-env-improvedone
 
+**Colab training script:** [colab_submission_script.py](./colab_submission_script.py)
+Direct raw URL for Colab download: https://raw.githubusercontent.com/umar-sharif821/cdn-cache-env-improvedone/master/colab_submission_script.py
+
+**OpenEnv manifest:** [openenv.yaml](./openenv.yaml)
+
+---
+
+## OpenEnv Compliance
+
+This environment is built against the OpenEnv spec:
+
+- `openenv.yaml` describes tasks, observation space, action space, reward range, and endpoints.
+- Pydantic models in `env/models.py` define `Observation`, `Action`, `Reward`, `StepResult`, `FileEntry`, and `TaskConfig`.
+- `env/cache.py` implements the standard `reset() / step() / state()` loop.
+- The FastAPI server (`api/main.py`) exposes `/reset`, `/step`, `/state`, `/tasks`, and `/health`.
+- The Colab RL environment uses a `gymnasium.Env` subclass that emits the canonical 5-tuple `(obs, reward, terminated, truncated, info)` with deterministic `reset(seed=...)` and registered metadata including `openenv_version`.
+
+To install the OpenEnv core package alongside the training script (outside the HF Space, where Gradio pins FastAPI):
+
+```bash
+pip install openenv-core
+```
+
 ---
 
 ## Why It Matters
