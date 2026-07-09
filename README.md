@@ -19,7 +19,8 @@ tags:
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![HF Space](https://img.shields.io/badge/%F0%9F%A4%97-Live%20Space-blue)](https://huggingface.co/spaces/umar-sharif821/cdn-cache-env-improvedone)
 
-Hackathon-ready OpenEnv project for **edge CDN cache admission and eviction**. It simulates the real production tradeoff between serving from a fast edge cache and falling back to slower origin fetches, while handling schema drift in CDN logs.
+
+OpenEnv project for **edge CDN cache admission and eviction**. It simulates the real production tradeoff between serving from a fast edge cache and falling back to slower origin fetches, while handling schema drift in CDN logs.
 
 ## Judges Quickstart (30 seconds)
 
